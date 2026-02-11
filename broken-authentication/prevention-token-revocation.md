@@ -228,7 +228,7 @@ This confirms that:
 
 ## Evidence of Prevention Patched Server Logs 
 
-![[evidence/prevention_patched_server_logs.png]]
+![Patched Server Logs](evidence/prevention_patched_server_logs.png)
 
 ---
 

@@ -245,7 +245,7 @@ As a result:
 
 **Logging out using curl :**
 
-![[evidence/manual_logout_using_jwt_token_and_curl.png]]
+![Logout with curl](evidence/manual_logout_using_jwt_token_and_curl.png)
 
 ---
 
@@ -272,7 +272,7 @@ TOKEN_USED   ← reuse after logout
 
 ## Evidence of Server logs after Detection Patch
 
-![[evidence/detection_patched_server_logs.png]]
+![Detection Patched Server Logs](evidence/detection_patched_server_logs.png)
 
 ---
 

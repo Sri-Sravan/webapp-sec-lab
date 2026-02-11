@@ -96,7 +96,7 @@ If credentials are invalid:
 
 Invalid credentials did not result in token issuance.
 
-![[evidence/response_login_with_invalid_creds.png]]
+![Invalid Credentials Response](evidence/response_login_with_invalid_creds.png)
 
 ---
 
@@ -104,7 +104,7 @@ Invalid credentials did not result in token issuance.
 
 User registration request and server response confirming account creation.
 
-![[evidence/Registration_successful.png]]
+![Successful Registration](evidence/Registration_successful.png)
 
 ---
 
@@ -116,7 +116,7 @@ After successful authentication, the JWT token is stored in the browser cookies.
 
 Authentication token visible in browser developer tools under Cookies.
 
-![[evidence/Auth_token_stored_inside_cookie.png]]
+![Token Stored in Cookie](evidence/Auth_token_stored_inside_cookie.png)
 
 This confirms that the token is accessible client-side and may be extracted if compromised.
 
@@ -181,7 +181,7 @@ The token remains valid even after logout.
 Previously issued token replayed via Burp Repeater after logout.  
 Server response confirms session remained valid.
 
-![[evidence/unpatched_request_using_jwt_token_after_logout.png]]
+![Request After Logout](evidence/unpatched_request_using_jwt_token_after_logout.png)
 
 This demonstrates that logout does not invalidate the session server-side.
 
@@ -247,7 +247,7 @@ Baseline observability showed:
 
 Server logs during exploitation phase showed no authentication lifecycle visibility.
 
-![[evidence/unpatched_server_logs.png]]
+![Server Logs](evidence/unpatched_server_logs.png)
 
 This significantly increases detection difficulty and prevents forensic reconstruction.
 
