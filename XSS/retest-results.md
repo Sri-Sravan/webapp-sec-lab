@@ -64,7 +64,7 @@ No script execution occurs
 
 DOM XSS payload rendered safely after patch.
 
-![dom_xss_after_patch_result](dom_xss_after_patch_result.png)
+![dom_xss_after_patch_result](evidence/dom_xss_after_patch_result.png)
 
 ---
 
@@ -114,7 +114,7 @@ Tracking page loads normally
 
 Reflected payload fails to execute after patch.
 
-![reflected_xss_after_patch_result](reflected_xss_after_patch_result.png)
+![reflected_xss_after_patch_result](evidence/reflected_xss_after_patch_result.png)
 
 ---
 
@@ -158,7 +158,7 @@ Feedback entry renders safely
 
 Stored XSS payload does not execute in the administration interface.
 
-![stored_xss_result _after_patch](stored_xss_result%20_after_patch.png)
+![stored_xss_result _after_patch](evidence/stored_xss_result%20_after_patch.png)
 
 ---
 
@@ -176,7 +176,7 @@ Attempting to submit an empty comment triggers a validation error.
 
 Customer feedback form validation preventing empty submission.
 
-![feedback_page_error_for empty_comment_field](feedback_page_error_for%20empty_comment_field.png)
+![feedback_page_error_for empty_comment_field](evidence/feedback_page_error_for%20empty_comment_field.png)
 
 ---
 
@@ -200,7 +200,7 @@ No exploit-related server log entries are generated
 
 Server logs confirm that the XSS challenge was not triggered after patching.
 
-![server_logs_after_patch](server_logs_after_patch.png)
+![server_logs_after_patch](evidence/server_logs_after_patch.png)
 
 ---
 
