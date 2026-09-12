@@ -1,105 +1,42 @@
 # Broken Authentication – Session Reuse After Logout
 
-## Overview
+Hands-on security assessment of JWT session invalidation and authentication lifecycle observability in OWASP Juice Shop.
 
-This case study documents the discovery, analysis, monitoring, remediation, and validation of a Broken Authentication vulnerability in OWASP Juice Shop.
+## Quick Summary
 
-The identified issue allowed a previously issued JWT authentication token to remain valid after user logout. Because the application did not perform server-side session invalidation, a captured token could be replayed to access protected resources even after the user had ended their session.
-
-In addition to the session management weakness, the application lacked authentication lifecycle visibility, making login, logout, and token abuse difficult to detect.
-
----
-
-## Objectives
-
-The goals of this exercise were to:
-
-- Identify and validate the authentication flaw
-- Understand the root cause of session persistence
-- Improve authentication observability
-- Implement server-side token revocation
-- Retest the application to confirm remediation
-- Document the complete vulnerability lifecycle
+| Metric | Value |
+| :--- | :--- |
+| **Vulnerability** | Broken Authentication (Improper Session Invalidation) |
+| **OWASP Category** | A07:2021 – Identification and Authentication Failures |
+| **CWE** | CWE-287: Improper Authentication |
+| **Severity** | High |
+| **Target Endpoints** | `POST /rest/user/login`, `GET /rest/user/whoami`, `POST /rest/user/logout` |
+| **Status** | ✅ Remediated & Verified (Closed) |
 
 ---
 
-## Vulnerability Summary
+## Lab Documentation
 
-| Attribute | Value |
-|------------|--------|
-| Category | Broken Authentication |
-| OWASP | A7:2021 / A7:2025 |
-| CWE | CWE-287 – Improper Authentication |
-| Severity | High |
-| Impact | Session reuse after logout |
-| Detection Capability (Initial) | None |
+This module tracks the vulnerability lifecycle across four sequential reports:
 
----
+1. **[01-broken-authentication-report.md](./01-broken-authentication-report.md)**  
+   Vulnerability discovery, token replay exploit steps via Burp Repeater, root cause analysis, and baseline logging gaps.
 
-## Attack Scenario
+2. **[02-detection-observability-logging.md](./02-detection-observability-logging.md)**  
+   Phase 1 hardening: instrumenting authentication lifecycle telemetry (`LOGIN_SUCCESS`, `TOKEN_USED`, `LOGOUT`) to make session abuse observable before applying blocking controls.
 
-1. User authenticates successfully.
-2. JWT token is issued by the application.
-3. Token is captured from browser storage.
-4. User logs out.
-5. Captured token is replayed against a protected endpoint.
-6. Application continues to accept the token.
+3. **[03-prevention-token-revocation.md](./03-prevention-token-revocation.md)**  
+   Phase 2 hardening: implementing server-side token revocation (`revokedTokens` set in `insecurity.ts`) and a dedicated backend logout endpoint in `server.ts`.
 
-Result:
-
-- Session remains active.
-- Logout does not invalidate the token.
-- Unauthorized access remains possible.
+4. **[04-retest-results.md](./04-retest-results.md)**  
+   Retest verification confirming replayed tokens receive `HTTP 401 Unauthorized` (`Session expired`) and trigger `TOKEN_REJECTED` audit logs.
 
 ---
 
-## Security Improvements Implemented
+## Patches & Evidence
 
-### Authentication Observability
-
-The following events were instrumented for monitoring:
-
-- LOGIN_SUCCESS
-- TOKEN_USED
-- LOGOUT
-- TOKEN_REJECTED
-
-This provides visibility into the complete authentication lifecycle.
-
-### Server-Side Logout
-
-A dedicated logout endpoint was implemented to:
-
-- Clear authentication cookies
-- Revoke active tokens
-- Generate logout audit logs
-
-### Token Revocation
-
-A token revocation mechanism was introduced to:
-
-- Invalidate tokens upon logout
-- Reject replayed tokens
-- Prevent post-logout session reuse
-
----
-
-## Validation Results
-
-After implementing the remediation:
-
-| Test | Result |
-|---------|---------|
-| Login | Successful |
-| Protected Endpoint Access | Successful |
-| Logout | Successful |
-| Token Replay After Logout | Blocked |
-| Rejected Token Logged | Yes |
-
-Observed log sequence:
-
-```text
-LOGIN_SUCCESS
-TOKEN_USED
-LOGOUT
-TOKEN_REJECTED
+* **`patches/`** – Drop-in replacement source files for Juice Shop:
+  * [`insecurity.ts`](./patches/insecurity.ts) – Token revocation store & middleware validation check.
+  * [`login.ts`](./patches/login.ts) – Authentication success audit logging.
+  * [`server.ts`](./patches/server.ts) – Server-side logout endpoint (`POST /rest/user/logout`).
+* **`evidence/`** – Supporting screenshots covering Burp Repeater flows, DevTools cookie storage, and server console telemetry.

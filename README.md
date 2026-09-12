@@ -28,17 +28,34 @@ Assessment of JWT-based authentication mechanisms, including token replay attack
 
 ---
 
-### Stored Cross-Site Scripting (XSS)
+### Cross-Site Scripting (XSS)
 
-Assessment of user-controlled input handling and output rendering to identify and remediate stored XSS vulnerabilities.
+Assessment of user-controlled input handling and output rendering across multiple contexts (DOM, Reflected, and Stored XSS) to identify and remediate client-side injection flaws.
 
 **Key Activities**
 
-* Payload development and validation
-* Vulnerability impact assessment
-* Root cause analysis
-* Secure output rendering implementation
+* Multi-context payload development and validation
+* Vulnerability impact assessment across client DOM and administrative interfaces
+* Root cause analysis of sanitizer bypasses
+* Secure Angular template interpolation & sanitization implementation
 * Post-remediation verification
+
+---
+
+### Insecure Direct Object References (IDOR / BOLA)
+
+Assessment of object-level authorization across RESTful endpoints and document datastores, covering unauthorized data exposure (Read IDOR) and unauthorized content defacement (Write IDOR).
+
+**Key Activities**
+
+* Direct object identifier manipulation in route paths and request bodies
+* Confidential cart data extraction & review defacement PoC execution
+* Root cause analysis across relational and document datastore tiers
+* Server-side object-level access control (BOLA) and author verification implementation
+* Security audit telemetry instrumentation (`ACCESS_DENIED_IDOR`)
+* Post-remediation verification confirming HTTP 403 Forbidden enforcement
+
+---
 
 ## Methodology
 
@@ -47,8 +64,8 @@ Each module follows a consistent security assessment workflow:
 1. Vulnerability Identification
 2. Exploitation & Validation
 3. Root Cause Analysis
-4. Remediation
-5. Security Verification
+4. Remediation & Patching
+5. Security Verification & Retesting
 6. Documentation & Reporting
 
 ## Repository Structure
@@ -56,23 +73,36 @@ Each module follows a consistent security assessment workflow:
 ```text
 webapp-sec-lab/
 ├── broken-authentication/
-│   ├── report/
+│   ├── 01-broken-authentication-report.md
+│   ├── 02-detection-observability-logging.md
+│   ├── 03-prevention-token-revocation.md
+│   ├── 04-retest-results.md
 │   ├── evidence/
-│   └── patch/
+│   └── patches/
 │
-└── stored-xss/
-    ├── report/
+├── XSS/
+│   ├── 01-xss-vulnerability-assessment.md
+│   ├── 02-prevention-xss-hardening.md
+│   ├── 03-retest-results.md
+│   ├── evidence/
+│   └── patches/
+│
+└── IDOR/
+    ├── 01-idor-vulnerability-assessment.md
+    ├── 02-prevention-idor-hardening.md
+    ├── 03-retest-results.md
     ├── evidence/
-    └── patch/
+    └── patches/
 ```
 
 ## Tools & Technologies
 
 * OWASP Juice Shop
-* Burp Suite
+* Burp Suite Community
 * curl
 * Node.js / npm
-* JavaScript
+* TypeScript / JavaScript
+* Angular
 * JWT
 * Git
 
@@ -82,11 +112,13 @@ webapp-sec-lab/
 * Vulnerability Assessment
 * Authentication Security
 * Cross-Site Scripting Analysis
+* Broken Access Control & IDOR Analysis
+* Object-Level Authorization Engineering
 * Secure Coding Practices
-* Security Remediation
+* Security Remediation & Hardening
 * Penetration Testing
 * Root Cause Analysis
-* Technical Reporting
+* Technical Reporting & Documentation
 
 ## Disclaimer
 
