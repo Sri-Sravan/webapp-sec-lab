@@ -68,22 +68,6 @@ flowchart LR
 
 ---
 
-## Standard Module Layout
-
-Every module in this repository follows a consistent, auditable four-part structure:
-
-```text
-<module-directory>/
-├── README.md                              # Module overview & document navigation index
-├── 01-<vuln>-vulnerability-assessment.md # Technical assessment, PoC steps, & evidence
-├── 02-prevention-<vuln>-hardening.md      # Code remediation diffs & architecture rationale
-├── 03-retest-results.md                   # Replay verification & closure documentation
-├── evidence/                              # High-resolution Burp Suite & server log captures
-└── patches/                               # Complete drop-in source files for the target app
-```
-
----
-
 ## Repository Structure
 
 ```text
