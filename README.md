@@ -44,6 +44,7 @@ flowchart LR
 | **[Broken Authentication](./broken-authentication/)** | Broken Authentication | JWT session reuse after logout; lack of server-side token invalidation | `POST /rest/user/login`<br>`GET /rest/user/whoami` | **High**<br>`CWE-287` | ✅ Closed | [01](./broken-authentication/01-broken-authentication-report.md) • [02](./broken-authentication/02-detection-observability-logging.md) • [03](./broken-authentication/03-prevention-token-revocation.md) • [04](./broken-authentication/04-retest-results.md) |
 | **[Cross-Site Scripting (XSS)](./XSS/)** | Injection | Sanitizer bypasses; unsafe DOM rendering across DOM, Reflected, and Stored contexts | `/search?q=`<br>`/track-order?id=`<br>`/api/Feedbacks` | **High**<br>`CWE-79` | ✅ Closed | [01](./XSS/01-xss-vulnerability-assessment.md) • [02](./XSS/02-prevention-xss-hardening.md) • [03](./XSS/03-retest-results.md) |
 | **[IDOR & BOLA](./IDOR/)** | Broken Access Control | Missing object-level authorization on basket reads and product review updates | `GET /rest/basket/:id`<br>`PATCH /rest/products/reviews` | **High**<br>`CWE-639` | ✅ Closed | [01](./IDOR/01-idor-vulnerability-assessment.md) • [02](./IDOR/02-prevention-idor-hardening.md) • [03](./IDOR/03-retest-results.md) |
+| **[Security Misconfiguration](./security-misconfiguration/)** | Security Misconfiguration | Development error handlers leaking stack traces & SQL; public directory browsing; null-byte backup download; missing security headers | `GET /rest/products/search`<br>`GET /ftp/`<br>`GET /ftp/:file`<br>Global HTTP Headers | **High**<br>`CWE-209`<br>`CWE-548` | ✅ Closed | [01](./security-misconfiguration/01-security-misconfiguration-assessment.md) • [02](./security-misconfiguration/02-prevention-security-misconfiguration-hardening.md) • [03](./security-misconfiguration/03-retest-results.md) |
 
 ---
 
@@ -65,6 +66,14 @@ flowchart LR
   * **Write IDOR:** `PATCH /rest/products/reviews` updated reviews matching only the document ID, allowing any authenticated user to deface reviews posted by other customers or admins.
 * **The Fix:** Bound basket lookups to session ownership (`user.bid === requestedId`) and verified review authorship (`review.author === user.data.email`) while retaining administrative role overrides.
 * **Telemetry Added:** Emitted real-time `ACCESS_DENIED_IDOR` warnings for access control violations.
+
+### 4. [Security Misconfiguration – Multi-Vector Hardening](./security-misconfiguration/)
+* **The Flaw:** Identified three distinct configuration and operational defects:
+  * **Verbose Error & Database Stack Leak (CWE-209):** The Express development error handler (`errorhandler()`) dumped raw SQL syntax, internal filesystem paths, and framework versions directly to HTTP clients upon unhandled database or routing exceptions.
+  * **Directory Browsing & Null-Byte Bypass (CWE-548 / CWE-200):** Public indexing enabled on `/ftp` via `serve-index` allowed attackers to discover sensitive files. Furthermore, insecure null-byte cutoff logic allowed bypassing the `.md`/`.pdf` extension whitelist to exfiltrate private backup files (`package.json.bak`, `coupons_2013.md.bak`).
+  * **Missing Defensive Headers (CWE-693):** Total absence of CSP, HSTS, and Referrer policies across server responses.
+* **The Fix:** Replaced `errorhandler()` with centralized production error-handling middleware that logs call stacks to server logs while returning generic JSON to clients; disabled directory indexing on `/ftp`; sanitized file downloads with strict extension validation and null-byte rejection; enforced modern defensive headers (`Content-Security-Policy`, `Strict-Transport-Security`, `Referrer-Policy`, `Permissions-Policy`).
+* **Retest Result:** Verified opaque `HTTP 500` JSON errors, `HTTP 403 Forbidden` on directory indexing and null-byte manipulation, and enforced security headers with zero functional regression on valid document viewing.
 
 ---
 
@@ -91,13 +100,21 @@ webapp-sec-lab/
 │   ├── evidence/                          # 13 screenshots (payload staging, alerts, safe render)
 │   └── patches/                           # search-result, track-result, administration
 │
-└── IDOR/
+├── IDOR/
+│   ├── README.md
+│   ├── 01-idor-vulnerability-assessment.md
+│   ├── 02-prevention-idor-hardening.md
+│   ├── 03-retest-results.md
+│   ├── evidence/                          # 7 screenshots (PoC leaks, review defacement, 403s)
+│   └── patches/                           # basket.ts, updateProductReviews.ts
+│
+└── security-misconfiguration/
     ├── README.md
-    ├── 01-idor-vulnerability-assessment.md
-    ├── 02-prevention-idor-hardening.md
+    ├── 01-security-misconfiguration-assessment.md
+    ├── 02-prevention-security-misconfiguration-hardening.md
     ├── 03-retest-results.md
-    ├── evidence/                          # 7 screenshots (PoC leaks, review defacement, 403s)
-    └── patches/                           # basket.ts, updateProductReviews.ts
+    ├── evidence/                          # 9 screenshots (SQL/stack leaks, indexing, headers, retests)
+    └── patches/                           # server.ts, fileServer.ts
 ```
 
 ---
