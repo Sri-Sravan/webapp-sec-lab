@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 140" width="100%" height="100%">
+  <defs>
+    <style>
+      .card-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; text-anchor: middle; }
+      .card-sub { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; fill: #94a3b8; text-anchor: middle; }
+      .arrow { stroke: #64748b; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Step 1: Discovery & Staging -->
+  <g>
+    <rect x="15" y="15" width="146" height="110" rx="10" fill="#161b22" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.8"/>
+    <text x="88" y="42" class="card-title" fill="#38bdf8">1. Discovery</text>
+    <text x="88" y="58" class="card-title" fill="#38bdf8">&amp; Staging</text>
+    <line x1="35" y1="68" x2="141" y2="68" stroke="#334155" stroke-width="1"/>
+    <text x="88" y="86" class="card-sub">• Endpoint mapping</text>
+    <text x="88" y="102" class="card-sub">• Parameter probing</text>
+  </g>
+
+  <!-- Arrow 1 -> 2 -->
+  <path d="M 170 70 L 182 70 M 177 65 L 182 70 L 177 75" class="arrow"/>
+
+  <!-- Step 2: PoC Exploitation -->
+  <g>
+    <rect x="191" y="15" width="146" height="110" rx="10" fill="#161b22" stroke="#f43f5e" stroke-width="1.5" stroke-opacity="0.8"/>
+    <text x="264" y="42" class="card-title" fill="#f43f5e">2. PoC</text>
+    <text x="264" y="58" class="card-title" fill="#f43f5e">Exploitation</text>
+    <line x1="211" y1="68" x2="317" y2="68" stroke="#334155" stroke-width="1"/>
+    <text x="264" y="86" class="card-sub">• Traffic intercept</text>
+    <text x="264" y="102" class="card-sub">• Evidence capture</text>
+  </g>
+
+  <!-- Arrow 2 -> 3 -->
+  <path d="M 346 70 L 358 70 M 353 65 L 358 70 L 353 75" class="arrow"/>
+
+  <!-- Step 3: Root Cause Analysis -->
+  <g>
+    <rect x="367" y="15" width="146" height="110" rx="10" fill="#161b22" stroke="#fbbf24" stroke-width="1.5" stroke-opacity="0.8"/>
+    <text x="440" y="42" class="card-title" fill="#fbbf24">3. Root Cause</text>
+    <text x="440" y="58" class="card-title" fill="#fbbf24">Analysis</text>
+    <line x1="387" y1="68" x2="493" y2="68" stroke="#334155" stroke-width="1"/>
+    <text x="440" y="86" class="card-sub">• Source code audit</text>
+    <text x="440" y="102" class="card-sub">• Architecture review</text>
+  </g>
+
+  <!-- Arrow 3 -> 4 -->
+  <path d="M 522 70 L 534 70 M 529 65 L 534 70 L 529 75" class="arrow"/>
+
+  <!-- Step 4: Defensive Patching -->
+  <g>
+    <rect x="543" y="15" width="146" height="110" rx="10" fill="#161b22" stroke="#34d399" stroke-width="1.5" stroke-opacity="0.8"/>
+    <text x="616" y="42" class="card-title" fill="#34d399">4. Defensive</text>
+    <text x="616" y="58" class="card-title" fill="#34d399">Patching</text>
+    <line x1="563" y1="68" x2="669" y2="68" stroke="#334155" stroke-width="1"/>
+    <text x="616" y="86" class="card-sub">• Code remediation</text>
+    <text x="616" y="102" class="card-sub">• Audit telemetry</text>
+  </g>
+
+  <!-- Arrow 4 -> 5 -->
+  <path d="M 698 70 L 710 70 M 705 65 L 710 70 L 705 75" class="arrow"/>
+
+  <!-- Step 5: Verification & Closure -->
+  <g>
+    <rect x="719" y="15" width="146" height="110" rx="10" fill="#161b22" stroke="#a78bfa" stroke-width="1.5" stroke-opacity="0.8"/>
+    <text x="792" y="42" class="card-title" fill="#a78bfa">5. Verification</text>
+    <text x="792" y="58" class="card-title" fill="#a78bfa">&amp; Closure</text>
+    <line x1="739" y1="68" x2="845" y2="68" stroke="#334155" stroke-width="1"/>
+    <text x="792" y="86" class="card-sub">• Exploit replay</text>
+    <text x="792" y="102" class="card-sub">• Regression testing</text>
+  </g>
+</svg>

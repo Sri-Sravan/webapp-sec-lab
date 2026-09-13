@@ -21,19 +21,9 @@ Most web application security labs end at the exploit stage. **WebApp-Sec-Lab** 
 
 Each module in this repository demonstrates the five core phases of professional Application Security (AppSec) engagements:
 
-```mermaid
-flowchart LR
-    A["<b>1. Discovery & Staging</b><br/>• Endpoint mapping<br/>• Parameter probing"] --> B["<b>2. PoC Exploitation</b><br/>• Traffic interception<br/>• Evidence capture"]
-    B --> C["<b>3. Root Cause Analysis</b><br/>• Source code audit<br/>• Architecture review"]
-    C --> D["<b>4. Defensive Patching</b><br/>• Code-level remediation<br/>• Audit telemetry"]
-    D --> E["<b>5. Verification & Closure</b><br/>• Exploit replay<br/>• Regression retesting"]
-
-    style A fill:#1e293b,stroke:#38bdf8,stroke-width:1px,color:#f8fafc
-    style B fill:#1e293b,stroke:#f43f5e,stroke-width:1px,color:#f8fafc
-    style C fill:#1e293b,stroke:#fbbf24,stroke-width:1px,color:#f8fafc
-    style D fill:#1e293b,stroke:#34d399,stroke-width:1px,color:#f8fafc
-    style E fill:#1e293b,stroke:#a78bfa,stroke-width:1px,color:#f8fafc
-```
+<p align="center">
+  <img src="./appsec-lifecycle.svg" alt="AppSec Vulnerability Management Lifecycle" width="100%">
+</p>
 
 ---
 
@@ -82,6 +72,7 @@ flowchart LR
 ```text
 webapp-sec-lab/
 ├── README.md                              # Main lab documentation and project index
+├── appsec-lifecycle.svg                   # Responsive vector lifecycle diagram
 │
 ├── broken-authentication/
 │   ├── README.md
